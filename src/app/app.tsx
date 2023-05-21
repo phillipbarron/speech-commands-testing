@@ -17,20 +17,24 @@ const Recipie = () => {
 
   const commands = [
       {
-        command: 'next',
+        command: 'next step',
         callback: () => setValue(prev => prev + 1),
+        isFuzzyMatch: true,
       },
       {
-        command: 'previous',
+        command: 'previous step',
         callback: () => setValue(prev => prev - 1),
+        isFuzzyMatch: true,
       },
       {
         command: 'show ingredients',
-        callback: () => setShowIngredients(true)
+        callback: () => setShowIngredients(true),
+        isFuzzyMatch: true,
       },
       {
         command: 'hide ingredients',
-        callback: () => setShowIngredients(false)
+        callback: () => setShowIngredients(false),
+        isFuzzyMatch: true,
       }
     ];
 
@@ -52,7 +56,15 @@ const Recipie = () => {
       <p><strong>VALUE: {value}</strong></p>
       <p>We Are Listening!</p>
       <p>{transcript}</p>
-      {showIngredients && <div>INGREDIENTS</div>}
+      {showIngredients &&
+        <div>
+          INGREDIENTS:
+          <ul>
+            <li>1 cup of sugar</li>
+            <li>1 cup of flour</li>
+            <li>1 cup of milk</li>
+          </ul>
+           </div>}
     </div>
   );
 };
