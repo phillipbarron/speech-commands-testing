@@ -5,7 +5,7 @@ import SpeechRecognition, {
 } from 'react-speech-recognition';
 import React, { useEffect, useState } from 'react';
 
-const StyledApp = styled.div`
+const TestApp = styled.div`
   text-align: center;
   font-family: sans-serif;
   padding: 2rem;
@@ -100,9 +100,9 @@ const Recipie = () => {
 
 export function App() {
   return (
-    <StyledApp>
+    <TestApp>
       <Recipie />
-    </StyledApp>
+    </TestApp>
   );
 }
 
