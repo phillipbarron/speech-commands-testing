@@ -12,22 +12,32 @@ const TestApp = styled.div`
 `;
 
 const Recipie = () => {
-  const [value, setValue] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0);
   const [showIngredients, setShowIngredients] = useState(false);
+
 
   const keyPressHandler = ({ key }: KeyboardEvent) => {
     switch (key) {
       case 'ArrowUp':
       case 'ArrowRight':
-        setValue((prev) => prev + 1);
+       stepForward();
         break;
       case 'ArrowDown':
       case 'ArrowLeft':
-        setValue((prev) => prev - 1);
+        stepBackward();
         break;
       default:
         break;
     }
+  };
+
+  const stepForward = () => {
+    //todo: add check for last step
+    setCurrentStep((prev) => prev + 1);
+  };
+
+  const stepBackward = () => {
+    setCurrentStep((prev) => prev > 0 ? prev - 1 : 0);
   };
 
   useEffect(() => {
@@ -41,13 +51,13 @@ const Recipie = () => {
 
   const commands = [
     {
-      command: 'next step',
-      callback: () => setValue((prev) => prev + 1),
+      command: ['next step', 'forward'],
+      callback: () => stepForward(),
       isFuzzyMatch: true,
     },
     {
-      command: 'previous step',
-      callback: () => setValue((prev) => prev - 1),
+      command: ['previous step', 'step back', 'back'],
+      callback: () => stepBackward(),
       isFuzzyMatch: true,
     },
     {
@@ -74,7 +84,7 @@ const Recipie = () => {
     <div>
       <button onClick={SpeechRecognition.stopListening}>Stop</button>
       <p>
-        <strong>VALUE: {value}</strong>
+        <strong>VALUE: {currentStep}</strong>
       </p>
       <p>Use arrow keys or voice</p>
       <p>{transcript}</p>
