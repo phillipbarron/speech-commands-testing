@@ -3,7 +3,7 @@ import 'regenerator-runtime/runtime';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 const TestApp = styled.div`
   text-align: center;
@@ -15,12 +15,11 @@ const Recipie = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [showIngredients, setShowIngredients] = useState(false);
 
-
-  const keyPressHandler = ({ key }: KeyboardEvent) => {
+  const keyPressHandler = useCallback(({ key }: KeyboardEvent) => {
     switch (key) {
       case 'ArrowUp':
       case 'ArrowRight':
-       stepForward();
+        stepForward();
         break;
       case 'ArrowDown':
       case 'ArrowLeft':
@@ -29,7 +28,7 @@ const Recipie = () => {
       default:
         break;
     }
-  };
+  }, []);
 
   const stepForward = () => {
     //todo: add check for last step
@@ -37,7 +36,7 @@ const Recipie = () => {
   };
 
   const stepBackward = () => {
-    setCurrentStep((prev) => prev > 0 ? prev - 1 : 0);
+    setCurrentStep((prev) => (prev > 0 ? prev - 1 : 0));
   };
 
   useEffect(() => {
@@ -47,7 +46,7 @@ const Recipie = () => {
       SpeechRecognition.stopListening();
       window.removeEventListener('keydown', keyPressHandler);
     };
-  }, []);
+  }, [keyPressHandler]);
 
   const commands = [
     {
@@ -56,8 +55,8 @@ const Recipie = () => {
       isFuzzyMatch: true,
     },
     {
-      command: ['previous step', 'step back', 'back'],
-      callback: () => stepBackward(),
+      command: ['previous step', 'step back', 'back', 'go back'],
+      callback: () => stepBackward(), 
       isFuzzyMatch: true,
     },
     {
@@ -98,7 +97,7 @@ const Recipie = () => {
         >
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <h3>Ingredients:</h3>
-            <p>1 cup of sugar</p> 
+            <p>1 cup of sugar</p>
             <p>1 cup of flour</p>
             <p>1 cup of milk</p>
           </div>
