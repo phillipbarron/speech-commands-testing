@@ -8,7 +8,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>Recipes and that</h1>
+      <h1>Recipes 'n that</h1>
       <Button
         variant="contained"
         onClick={() => setShowChefMode(!showChefMode)}
